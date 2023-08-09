@@ -57,6 +57,7 @@ namespace Pinetime {
         lv_obj_t* label_date;
         lv_obj_t* heartbeatIcon;
         lv_obj_t* heartbeatValue;
+        lv_obj_t* glucoseValue;
         lv_obj_t* stepIcon;
         lv_obj_t* stepValue;
         lv_obj_t* notificationIcon;

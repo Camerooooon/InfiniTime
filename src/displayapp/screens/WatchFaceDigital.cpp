@@ -1,5 +1,6 @@
 #include "displayapp/screens/WatchFaceDigital.h"
 
+#include <displayapp/InfiniTimeTheme.h>
 #include <lvgl/lvgl.h>
 #include <cstdio>
 #include "displayapp/screens/NotificationIcon.h"
@@ -57,6 +58,11 @@ WatchFaceDigital::WatchFaceDigital(Controllers::DateTime& dateTimeController,
   lv_obj_set_style_local_text_color(heartbeatValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0xCE1B1B));
   lv_label_set_text_static(heartbeatValue, "");
   lv_obj_align(heartbeatValue, heartbeatIcon, LV_ALIGN_OUT_RIGHT_MID, 5, 0);
+
+  glucoseValue = lv_label_create(lv_scr_act(), nullptr);
+  lv_obj_set_style_local_text_color(glucoseValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, Colors::green);
+  lv_label_set_text_static(glucoseValue, "");
+  lv_obj_align(glucoseValue, lv_scr_act(), LV_ALIGN_IN_TOP_LEFT, 0, 0);
 
   stepValue = lv_label_create(lv_scr_act(), nullptr);
   lv_obj_set_style_local_text_color(stepValue, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, lv_color_hex(0x00FFE7));
@@ -146,6 +152,8 @@ void WatchFaceDigital::Refresh() {
     lv_obj_realign(heartbeatIcon);
     lv_obj_realign(heartbeatValue);
   }
+
+  lv_label_set_text_fmt(glucoseValue, "Glucose");
 
   stepCount = motionController.NbSteps();
   if (stepCount.IsUpdated()) {
