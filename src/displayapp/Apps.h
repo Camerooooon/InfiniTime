@@ -1,5 +1,6 @@
 #pragma once
 
+#include <displayapp/screens/Glucose.h>
 namespace Pinetime {
   namespace Applications {
     enum class Apps {
@@ -37,7 +38,8 @@ namespace Pinetime {
       SettingChimes,
       SettingShakeThreshold,
       SettingBluetooth,
-      Error
+      Error,
+      Glucose
     };
   }
 }

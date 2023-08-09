@@ -1,5 +1,7 @@
 #include "displayapp/DisplayApp.h"
+#include <displayapp/screens/Glucose.h>
 #include <libraries/log/nrf_log.h>
+#include <memory>
 #include "displayapp/screens/HeartRate.h"
 #include "displayapp/screens/Motion.h"
 #include "displayapp/screens/Timer.h"
@@ -295,6 +297,9 @@ void DisplayApp::Refresh() {
               case TouchEvents::SwipeUp:
                 LoadNewScreen(Apps::Launcher, DisplayApp::FullRefreshDirections::Up);
                 break;
+              case TouchEvents::SwipeLeft:
+                LoadNewScreen(Apps::Glucose, DisplayApp::FullRefreshDirections::Right);
+                break;
               case TouchEvents::SwipeDown:
                 LoadNewScreen(Apps::Notifications, DisplayApp::FullRefreshDirections::Down);
                 break;
@@ -420,6 +425,9 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
                                                        motionController,
                                                        systemTask->nimble().weather(),
                                                        filesystem);
+      break;
+    case Apps::Glucose:
+      currentScreen = std::make_unique<Screens::Glucose>();
       break;
 
     case Apps::Error:
