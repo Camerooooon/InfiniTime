@@ -16,6 +16,8 @@ namespace Pinetime {
 
       private:
         lv_obj_t *testLabel;
+        lv_obj_t *lowLine;
+        lv_obj_t *highLine;
         lv_obj_t *chartObj;
         lv_chart_series_t* low;
         lv_chart_series_t* med;

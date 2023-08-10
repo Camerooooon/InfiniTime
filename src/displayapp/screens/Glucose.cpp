@@ -8,6 +8,8 @@
 #include <lvgl/src/lv_misc/lv_area.h>
 #include <lvgl/src/lv_widgets/lv_btn.h>
 #include <lvgl/src/lv_widgets/lv_chart.h>
+#include <lvgl/src/lv_widgets/lv_label.h>
+#include <lvgl/src/lv_widgets/lv_line.h>
 #include <systemtask/Messages.h>
 
 using namespace Pinetime::Applications::Screens;
@@ -36,6 +38,26 @@ Glucose::Glucose() {
     testLabel = lv_label_create(lv_scr_act(), nullptr);
     lv_label_set_text_static(testLabel, "74");
 
+    lowLine = lv_line_create(lv_scr_act(), nullptr);
+    lv_obj_set_style_local_line_color(lowLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
+    lv_obj_set_style_local_line_dash_gap(lowLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 5);
+    lv_obj_set_style_local_line_dash_width(lowLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 5);
+    lv_obj_set_style_local_line_width(lowLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 2);
+
+    highLine = lv_line_create(lv_scr_act(), nullptr);
+    lv_obj_set_style_local_line_color(highLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
+    lv_obj_set_style_local_line_dash_gap(highLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 5);
+    lv_obj_set_style_local_line_dash_width(highLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 5);
+    lv_obj_set_style_local_line_width(highLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, 2);
+
+    
+    static lv_point_t line_points[] = { {0, 0}, {240, 0} };
+    lv_line_set_points(lowLine, line_points, 2);
+    lv_obj_align(lowLine, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, -22);
+
+    lv_line_set_points(highLine, line_points, 2);
+    lv_obj_align(highLine, nullptr, LV_ALIGN_IN_BOTTOM_LEFT, 0, -105);
+
     chartObj = lv_chart_create(lv_scr_act(), nullptr);
 
     lv_obj_set_size(chartObj, 200, 240);
@@ -47,6 +69,7 @@ Glucose::Glucose() {
 
     lv_obj_set_style_local_line_width(chartObj, LV_CHART_PART_SERIES, LV_STATE_DEFAULT, 0);
     lv_obj_set_style_local_radius(chartObj, LV_CHART_PART_CURSOR, LV_STATE_DEFAULT, 0);
+    lv_obj_set_style_local_size(chartObj, LV_CHART_PART_SERIES, LV_STATE_DEFAULT, 4);
 
     low = lv_chart_add_series(chartObj, LV_COLOR_RED);
     med = lv_chart_add_series(chartObj, LV_COLOR_LIME);
