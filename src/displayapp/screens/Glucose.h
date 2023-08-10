@@ -20,7 +20,6 @@ namespace Pinetime {
         lv_chart_series_t* low;
         lv_chart_series_t* med;
         lv_chart_series_t* high;
-        lv_style_t *chartStyle;
       };
     }
   }

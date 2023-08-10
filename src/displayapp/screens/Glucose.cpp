@@ -56,7 +56,7 @@ Glucose::Glucose() {
     int sugar[] = { 195, 220, 241, 253, 260, 262, 267, 270, 279, 300, 314, 324, 321, 314, 301, 281, 250, 233, 220, 194, 175, 152, 142, 143, 124, 110, 106, 100, 92, 88, 80, 73, 69, 74 };
 
     for (int i = 0; i<34; i++) {
-        lv_chart_series_t* series;
+        lv_chart_series_t* series = nullptr;
         if (sugar[i] < 80) { 
             series = low;
         }else if (sugar[i] < 220) {
