@@ -394,6 +394,7 @@ list(APPEND SOURCE_FILES
         displayapp/screens/Notifications.cpp
         displayapp/screens/Twos.cpp
         displayapp/screens/Glucose.cpp
+        displayapp/screens/GlucoseAlert.cpp
         displayapp/screens/HeartRate.cpp
         displayapp/screens/Motion.cpp
         displayapp/screens/FlashLight.cpp

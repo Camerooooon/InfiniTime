@@ -2,6 +2,7 @@
 #include <displayapp/screens/Glucose.h>
 #include <libraries/log/nrf_log.h>
 #include <memory>
+#include "displayapp/screens/GlucoseAlert.h"
 #include "displayapp/screens/HeartRate.h"
 #include "displayapp/screens/Motion.h"
 #include "displayapp/screens/Timer.h"
@@ -427,7 +428,7 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
                                                        filesystem);
       break;
     case Apps::Glucose:
-      currentScreen = std::make_unique<Screens::Glucose>();
+      currentScreen = std::make_unique<Screens::GlucoseAlert>(motorController, SugarEvent::FallRate);
       break;
 
     case Apps::Error:
