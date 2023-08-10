@@ -15,7 +15,8 @@ namespace Pinetime {
         bool OnTouchEvent(TouchEvents event) override;
 
       private:
-        lv_obj_t *testLabel;
+        lv_obj_t *sugarIcon;
+        lv_obj_t *sugarLabel;
         lv_obj_t *lowLine;
         lv_obj_t *highLine;
         lv_obj_t *chartObj;

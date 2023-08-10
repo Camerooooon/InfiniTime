@@ -38,6 +38,11 @@ namespace Pinetime {
         static constexpr const char* home = "\xEF\x80\x95";
         static constexpr const char* sleep = "\xEE\xBD\x84";
         static constexpr const char* warning = "\xEE\x80\x82";
+        static constexpr const char* down = "\xEF\x87\xA3";
+        static constexpr const char* down_right = "\xEF\x87\xA4";
+        static constexpr const char* right = "\xEF\x87\x9F";
+        static constexpr const char* up_right = "\xEF\x87\xA1";
+        static constexpr const char* up = "\xEF\x87\xA0";
 
         // fontawesome_weathericons.c
         // static constexpr const char* sun = "\xEF\x86\x85";

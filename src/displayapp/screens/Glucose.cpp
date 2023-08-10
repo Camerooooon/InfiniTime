@@ -1,5 +1,6 @@
 #include "displayapp/screens/Glucose.h"
 #include "displayapp/InfiniTimeTheme.h"
+#include "displayapp/screens/Symbols.h"
 #include <cstdio>
 #include <lvgl/src/lv_api_map.h>
 #include <lvgl/src/lv_core/lv_disp.h>
@@ -29,14 +30,19 @@ void Glucose::OnButtonEvent(lv_obj_t* obj, lv_event_t event) {
 }
 
 void Glucose::ShowLabel() {
-    lv_label_set_text_static(testLabel, "Yo");
+    lv_label_set_text_static(sugarLabel, "Yo");
     
 
 }
 
 Glucose::Glucose() {
-    testLabel = lv_label_create(lv_scr_act(), nullptr);
-    lv_label_set_text_static(testLabel, "74");
+    sugarIcon = lv_label_create(lv_scr_act(), nullptr);
+    lv_label_set_text_static(sugarIcon, Symbols::up_right);
+    lv_obj_set_style_local_text_font(sugarIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, &lv_font_sys_48);
+
+    sugarLabel = lv_label_create(lv_scr_act(), nullptr);
+    lv_obj_align(sugarLabel, nullptr, LV_ALIGN_IN_TOP_LEFT, 50, 12);
+    lv_label_set_text_fmt(sugarLabel, "%d", 74);
 
     lowLine = lv_line_create(lv_scr_act(), nullptr);
     lv_obj_set_style_local_line_color(lowLine, LV_LINE_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_GRAY);
