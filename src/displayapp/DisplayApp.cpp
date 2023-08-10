@@ -428,7 +428,8 @@ void DisplayApp::LoadScreen(Apps app, DisplayApp::FullRefreshDirections directio
                                                        filesystem);
       break;
     case Apps::Glucose:
-      currentScreen = std::make_unique<Screens::GlucoseAlert>(motorController, SugarEvent::FallRate);
+      /*currentScreen = std::make_unique<Screens::GlucoseAlert>(motorController, SugarEvent::FallRate);*/
+      currentScreen = std::make_unique<Screens::Glucose>();
       break;
 
     case Apps::Error:

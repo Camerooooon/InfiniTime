@@ -49,7 +49,7 @@ Glucose::Glucose() {
     lv_obj_set_style_local_radius(chartObj, LV_CHART_PART_CURSOR, LV_STATE_DEFAULT, 0);
 
     low = lv_chart_add_series(chartObj, LV_COLOR_RED);
-    med = lv_chart_add_series(chartObj, LV_COLOR_GREEN);
+    med = lv_chart_add_series(chartObj, LV_COLOR_LIME);
     high = lv_chart_add_series(chartObj, LV_COLOR_YELLOW);
 
     

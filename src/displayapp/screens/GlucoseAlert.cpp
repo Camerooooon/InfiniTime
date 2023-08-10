@@ -9,6 +9,7 @@
 #include <lvgl/src/lv_core/lv_obj.h>
 #include <lvgl/src/lv_core/lv_obj_style_dec.h>
 #include <lvgl/src/lv_misc/lv_area.h>
+#include <lvgl/src/lv_misc/lv_color.h>
 #include <lvgl/src/lv_widgets/lv_btn.h>
 #include <lvgl/src/lv_widgets/lv_chart.h>
 #include <systemtask/Messages.h>
@@ -30,12 +31,11 @@ GlucoseAlert::GlucoseAlert(Pinetime::Controllers::MotorController& motorControll
     SetFlash(flasher);
 
     taskRefresh = lv_task_create(RefreshTaskCallback, LV_DISP_DEF_REFR_PERIOD, LV_TASK_PRIO_MID, this);
-
-    motorController.RunForDuration((uint8_t)500);
 }
 
 GlucoseAlert::~GlucoseAlert() {
     lv_obj_clean(lv_scr_act());
+    motorController.StopRinging();
 }
 
 const char* GlucoseAlert::GetWarningText() {
@@ -46,6 +46,20 @@ const char* GlucoseAlert::GetWarningText() {
             return "High Glucose";
         case Pinetime::Applications::SugarEvent::FallRate:
             return "Fall Rate";
+        case Pinetime::Applications::SugarEvent::SensorError:
+            return "Sensor Failure";
+    }
+}
+const lv_color_t GlucoseAlert::GetWarningColor() {
+    switch (sugarEvent) {
+        case Pinetime::Applications::SugarEvent::Low:
+            return LV_COLOR_RED;
+        case Pinetime::Applications::SugarEvent::High:
+            return LV_COLOR_ORANGE;
+        case Pinetime::Applications::SugarEvent::FallRate:
+            return LV_COLOR_NAVY;
+        case Pinetime::Applications::SugarEvent::SensorError:
+            return LV_COLOR_PURPLE;
     }
 }
 
@@ -54,20 +68,24 @@ void GlucoseAlert::Refresh() {
     if (xTaskGetTickCount() - startTime > 60u * configTICK_RATE_HZ / static_cast<uint16_t>(BEATS_PER_MINUTE)) {
       startTime += 60 * configTICK_RATE_HZ / BEATS_PER_MINUTE;
       flasher = !flasher;
-      motorController.RunForDuration((uint8_t)50);
+      if (startTime > 20000) {
+          motorController.StartRinging();
+      } else {
+          motorController.RunForDuration(100);
+      }
       SetFlash(flasher);
     }
 }
 
 void GlucoseAlert::SetFlash(bool flash) {
     if (flash) {
-        lv_obj_set_style_local_text_color(warningIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
-        lv_obj_set_style_local_text_color(warningLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
+        lv_obj_set_style_local_text_color(warningIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, GetWarningColor());
+        lv_obj_set_style_local_text_color(warningLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, GetWarningColor());
         lv_obj_set_style_local_bg_color(lv_scr_act(), LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
     } else {
         lv_obj_set_style_local_text_color(warningIcon, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
         lv_obj_set_style_local_text_color(warningLabel, LV_LABEL_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_WHITE);
-        lv_obj_set_style_local_bg_color(lv_scr_act(), LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, LV_COLOR_RED);
+        lv_obj_set_style_local_bg_color(lv_scr_act(), LV_OBJ_PART_MAIN, LV_STATE_DEFAULT, GetWarningColor());
     }
 }
 

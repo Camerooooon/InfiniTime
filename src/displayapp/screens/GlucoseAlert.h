@@ -6,7 +6,7 @@
 
 namespace Pinetime {
   namespace Applications {
-      enum class SugarEvent { Low, High, FallRate };
+      enum class SugarEvent { Low, High, FallRate, SensorError };
     namespace Screens {
 
       class GlucoseAlert: public Screen {
@@ -19,6 +19,7 @@ namespace Pinetime {
 
       private:
         const char* GetWarningText();
+        const lv_color_t GetWarningColor();
         Controllers::MotorController& motorController;
         SugarEvent sugarEvent;
         lv_obj_t *warningIcon;
